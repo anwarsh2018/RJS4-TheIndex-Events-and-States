@@ -6,17 +6,27 @@ import authors from "./data";
 // Components
 import Sidebar from "./Sidebar";
 import AuthorsList from "./AuthorsList";
+import AuthorDetail from "./AuthorDetail";
 
 class App extends Component {
+  state = {
+    currentAuthor : null
+  }
+
+  selectAuthor = author =>  this.setState({currentAuthor: author});
+  resetAuthor = ()=> this.setState({currentAuthor: null});
   render() {
     return (
       <div id="app" className="container-fluid">
         <div className="row">
           <div className="col-2">
-            <Sidebar />
+            <Sidebar clickHandler={this.resetAuthor} />
           </div>
           <div className="content col-10">
-            <AuthorsList authors={authors} />
+
+           {
+           (this.state.currentAuthor)? <AuthorDetail author={this.state.currentAuthor} /> : <AuthorsList authors={authors} clickHandler={this.selectAuthor}/>
+         }
           </div>
         </div>
       </div>
